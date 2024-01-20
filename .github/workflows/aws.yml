@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+      - name: Install deps
+        run: |
+          npm install
       - name: Format check
         run: |
           npm run fmt-check
