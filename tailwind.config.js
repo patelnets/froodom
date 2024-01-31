@@ -37,7 +37,7 @@ module.exports = {
               foreground: '#D2A178',
               DEFAULT: '#352B29',
             },
-            danger: "#FFB6A0"
+            danger: '#FFB6A0',
             // ... rest of the colors
           },
         },

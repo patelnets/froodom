@@ -10,7 +10,8 @@ import {
   NavbarMenuItem,
   Link,
   Button,
-  NavbarMenuToggle, Avatar,
+  NavbarMenuToggle,
+  Avatar,
 } from '@nextui-org/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
@@ -18,7 +19,10 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data: session } = useSession();
 
-  const menuItems = [{displayText: 'About us', href: "/about-us"}, {displayText: "Products", href: "/products"}];
+  const menuItems = [
+    { displayText: 'About us', href: '/about-us' },
+    { displayText: 'Products', href: '/products' },
+  ];
 
   return (
     <NextUiNavbar
@@ -32,27 +36,38 @@ export const Navbar = () => {
           className='sm:hidden'
         />
         <NavbarBrand>
-          <Link href={"/"} ><p className='font-bold text-inherit'>Froodom</p> </Link>
+          <Link href={'/'}>
+            <p className='font-bold text-inherit'>Froodom</p>{' '}
+          </Link>
         </NavbarBrand>
         <NavbarItem className='hidden sm:flex'>
           <Link color='primary' href='/products'>
             Products
           </Link>
         </NavbarItem>
-        <NavbarItem  className='hidden sm:flex'>
+        <NavbarItem className='hidden sm:flex'>
           <Link href='/about-us'>About us</Link>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className={'ml-auto'} justify='end'>
-        {!session && <NavbarItem>
-          <Button as={Link} color='primary' onClick={() => signIn()} variant='flat'>
-            Login
-          </Button>
-        </NavbarItem>}
-        {session && <NavbarItem>
-          <Avatar showFallback />
-        </NavbarItem>}
+        {!session && (
+          <NavbarItem>
+            <Button
+              as={Link}
+              color='primary'
+              onClick={() => signIn()}
+              variant='flat'
+            >
+              Login
+            </Button>
+          </NavbarItem>
+        )}
+        {session && (
+          <NavbarItem>
+            <Avatar showFallback />
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
@@ -69,12 +84,7 @@ export const Navbar = () => {
         ))}
         {session && (
           <NavbarMenuItem>
-            <Link
-              as={Link}
-              color='danger'
-              onClick={() => signOut()}
-              size='lg'
-            >
+            <Link as={Link} color='danger' onClick={() => signOut()} size='lg'>
               Sign out
             </Link>
           </NavbarMenuItem>
