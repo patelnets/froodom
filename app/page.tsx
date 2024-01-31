@@ -1,7 +1,4 @@
 'use client';
-
-import Image from 'next/image';
-import styles from './page.module.css';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import useSWRMutation from 'swr/mutation';
 
@@ -38,22 +35,5 @@ const DataFetching = () => {
 };
 
 export default function Home() {
-  const { data: session } = useSession();
-
-  if (session) {
-    console.log(session);
-    return (
-      <>
-        <DataFetching />
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  );
+  return null;
 }
