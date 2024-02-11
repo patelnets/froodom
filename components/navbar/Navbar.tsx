@@ -18,6 +18,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data: session } = useSession();
+  console.log("session", session)
 
   const menuItems = [
     { displayText: 'About us', href: '/about-us' },
@@ -27,7 +28,7 @@ export const Navbar = () => {
   return (
     <NextUiNavbar
       maxWidth='full'
-      className={'justify-between bg-foreground'}
+      className={'justify-between bg-dark-cream'}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>

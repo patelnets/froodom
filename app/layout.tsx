@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from './AuthContext';
-import { Providers } from '@/app/providers';
+import { NextUIProvider } from '@/app/NextUIProvider';
+import { ReactQueryProvider } from '@/app/ReactQueryProvider';
 import { Navbar } from '@/components/navbar/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,13 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={'text-dark-brown max-w-screen bg-pastel-beige'}>
+    <html lang='en' className={'text-black max-w-screen bg-cream'}>
       <body className={inter.className}>
         <AuthContext>
-          <Providers>
-            <Navbar />
-            {children}
-          </Providers>
+          <ReactQueryProvider>
+            <NextUIProvider>
+              <Navbar />
+              {children}
+            </NextUIProvider>
+          </ReactQueryProvider>
         </AuthContext>
       </body>
     </html>

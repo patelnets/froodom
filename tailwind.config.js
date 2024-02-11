@@ -21,6 +21,10 @@ module.exports = {
         'pastel-orange': '#FFC68A',
         'pastel-gray': '#CCCCCC',
         'dark-brown': '#352B29',
+        'black': '#000000',
+        'dark-cream': '#F4DFC8',
+        'cream': '#F4EAE0',
+        'light-cream': '#FAF6F0',
       },
     },
   },
@@ -30,8 +34,8 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            background: '#FFF1D9', // or DEFAULT
-            foreground: '#D2A178', // or 50 to 900 DEFAULT
+            background: '#F4EAE0', // or DEFAULT
+            foreground: '#000000', // or 50 to 900 DEFAULT
             primary: {
               //... 50 to 900
               foreground: '#D2A178',
