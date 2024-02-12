@@ -4,6 +4,8 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { Input, CheckboxGroup, Checkbox, Button } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
 import { addProduct } from '@/fetch-queries/products';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type Inputs = {
   name: string;
@@ -11,6 +13,9 @@ type Inputs = {
 };
 
 export const AddNewProductForm = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const { mutate, isPending, data } = useMutation({
     mutationFn: addProduct,
     throwOnError: true,
@@ -23,9 +28,20 @@ export const AddNewProductForm = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
+  // @ts-ignore TODO: fix
+  if (!session?.token.id_token) {
+    return null;
+  }
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
-    mutate({ name: data.name, stores: data.stores });
+    mutate(
+      {
+        // @ts-ignore TODO: fix
+        token: session?.token.id_token,
+        data: { name: data.name, stores: data.stores },
+      },
+      { onSuccess: () => router.push('/products') }
+    );
   };
 
   return (
