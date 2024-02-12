@@ -18,7 +18,6 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data: session } = useSession();
-  console.log("session", session)
 
   const menuItems = [
     { displayText: 'About us', href: '/about-us' },

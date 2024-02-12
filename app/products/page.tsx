@@ -3,7 +3,7 @@
 
 import { Products } from '@/components/products/Products';
 import { getProducts } from '@/fetch-queries/products';
-import { AddNewProductForm } from '@/components/products/AddNewProductForm';
+import { Button, Link } from '@nextui-org/react';
 
 const STORES = [
   { label: 'Tesco', value: 'tesco', description: 'Tesco' },
@@ -25,7 +25,12 @@ export default async function Home() {
       {/*  {(animal) => <AutocompleteItem key={animal.value}>{animal.label}</AutocompleteItem>}*/}
       {/*</Autocomplete>*/}
       {/*<Cards/>*/}
-      <Products products={data} />
+      <div className={'flex flex-col'}>
+        <Link href={'/products/add'}>
+          <Button>Add new product</Button>
+        </Link>
+        <Products products={data} />
+      </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <NextUIProvider>
               <Navbar />
-              {children}
+              <div className={'p-2'}>{children}</div>
             </NextUIProvider>
           </ReactQueryProvider>
         </AuthContext>
