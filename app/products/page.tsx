@@ -5,12 +5,6 @@ import { Products } from '@/components/products/Products';
 import { getProducts } from '@/fetch-queries/products';
 import { Button, Link } from '@nextui-org/react';
 
-const STORES = [
-  { label: 'Tesco', value: 'tesco', description: 'Tesco' },
-  { label: "Sainsbury's", value: 'sainsburys', description: 'Sainsburys' },
-  { label: 'Asda', value: 'asda', description: 'Asda' },
-];
-
 export default async function Home() {
   const data = await getProducts();
 
@@ -25,7 +19,7 @@ export default async function Home() {
       {/*  {(animal) => <AutocompleteItem key={animal.value}>{animal.label}</AutocompleteItem>}*/}
       {/*</Autocomplete>*/}
       {/*<Cards/>*/}
-      <div className={'flex flex-col'}>
+      <div className={'flex flex-col gap-2'}>
         <Link href={'/products/add'}>
           <Button>Add new product</Button>
         </Link>

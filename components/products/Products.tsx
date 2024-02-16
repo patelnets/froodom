@@ -12,5 +12,5 @@ export const Products = ({ products }: { products: any }) => {
     initialData: products,
   });
 
-  return `${data.products.length} products`;
+  return <Cards products={data.products} />;
 };

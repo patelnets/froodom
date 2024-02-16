@@ -1,3 +1,13 @@
+interface GetProductsResponse {
+  products: [
+    {
+      id: string;
+      name: string;
+      stores: string[];
+    },
+  ];
+}
+
 export async function getProducts() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/products`,
@@ -15,7 +25,7 @@ export async function getProducts() {
 
     throw new Error(data.message || 'An error occurred');
   }
-  const data = await response.json();
+  const data: GetProductsResponse = await response.json();
   return data;
 }
 

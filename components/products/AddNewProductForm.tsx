@@ -12,6 +12,54 @@ type Inputs = {
   stores: string[];
 };
 
+interface Store {
+  value: string;
+  displayName: string;
+}
+
+const STORES: Store[] = [
+  {
+    value: 'asda',
+    displayName: 'Asda',
+  },
+  {
+    value: 'asda',
+    displayName: 'Asda',
+  },
+  {
+    value: 'tesco',
+    displayName: 'Tesco',
+  },
+  {
+    value: 'sainsburys',
+    displayName: 'Sainsbury’s',
+  },
+  {
+    value: 'morrisons',
+    displayName: 'Morrisons',
+  },
+  {
+    value: 'mands',
+    displayName: 'M and S',
+  },
+  {
+    value: 'aldi',
+    displayName: 'Aldi',
+  },
+  {
+    value: 'lidl',
+    displayName: 'Lidl',
+  },
+  {
+    value: 'amazon',
+    displayName: 'Amazon',
+  },
+  {
+    value: 'hollandAndBarrett',
+    displayName: 'Holland and Barrett',
+  },
+];
+
 export const AddNewProductForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -33,7 +81,6 @@ export const AddNewProductForm = () => {
     return null;
   }
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
     mutate(
       {
         // @ts-ignore TODO: fix
@@ -69,11 +116,11 @@ export const AddNewProductForm = () => {
             onValueChange={onChange}
             isRequired
           >
-            <Checkbox value='asda'>Asda</Checkbox>
-            <Checkbox value='tesco'>Tesco</Checkbox>
-            <Checkbox value='sainsburys'>Sainsbury{"'"}s</Checkbox>
-            <Checkbox value='lidl'>Lidl</Checkbox>
-            <Checkbox value='aldi'>Aldi</Checkbox>
+            {STORES.map((store) => (
+              <Checkbox key={store.value} value={store.value}>
+                {store.displayName}
+              </Checkbox>
+            ))}
           </CheckboxGroup>
         )}
       />
