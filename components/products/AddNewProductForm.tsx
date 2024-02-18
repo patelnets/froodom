@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 type Inputs = {
   name: string;
   stores: string[];
+  image: FileList;
 };
 
 interface Store {
@@ -125,6 +126,14 @@ export const AddNewProductForm = () => {
         )}
       />
 
+      <Input
+        type={'file'}
+        accept='image/png, image/gif, image/jpeg'
+        multiple
+        label='Images'
+        className='my-2'
+        {...register('image', { required: true })}
+      />
       <Button className={'mt-5'} type='submit'>
         Submit
       </Button>
