@@ -11,14 +11,11 @@ import {
   NavbarMenuToggle,
   Navbar as NextUiNavbar,
 } from '@nextui-org/navbar';
-// import Profile from './Profile';
 import { SignIn } from '@/components/navbar/SignIn';
-import { Button } from '@nextui-org/button';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Avatar } from '@nextui-org/avatar';
 import { SignOut } from '@/components/navbar/SignOut';
-// import { signIn, signOut, useSession } from 'next-auth/react';
+import { authOptions } from '@/libs/next-auth';
 
 const menuItems = [
   { displayText: 'About us', href: '/about-us' },
@@ -30,7 +27,6 @@ const capitalizeFirstLetter = (word: string) => {
 };
 
 export const Navbar = async () => {
-  // const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const session = await getServerSession(authOptions);
 
   return (

@@ -5,7 +5,6 @@ import { AuthContext } from './AuthContext';
 import { NextUIProvider } from '@/app/NextUIProvider';
 import { ReactQueryProvider } from '@/app/ReactQueryProvider';
 import { Navbar } from '@/components/navbar/Navbar';
-import Profile from '@/components/navbar/Profile';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function RootLayout({
         <AuthContext>
           <ReactQueryProvider>
             <NextUIProvider>
-              {/*<Profile />*/}
               <Navbar />
               <div className={'p-2'}>{children}</div>
             </NextUIProvider>
