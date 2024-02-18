@@ -1,40 +1,57 @@
-'use client';
+'use server';
 
 import React from 'react';
+import { Link } from '@nextui-org/link';
 import {
-  Navbar as NextUiNavbar,
-  NavbarBrand,
-  NavbarContent,
   NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
-  Button,
+  NavbarContent,
+  NavbarBrand,
   NavbarMenuToggle,
-  Avatar,
-} from '@nextui-org/react';
-import { signIn, signOut, useSession } from 'next-auth/react';
+  Navbar as NextUiNavbar,
+} from '@nextui-org/navbar';
+// import Profile from './Profile';
+import { SignIn } from '@/components/navbar/SignIn';
+import { Button } from '@nextui-org/button';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { Avatar } from '@nextui-org/avatar';
+import { SignOut } from '@/components/navbar/SignOut';
+// import { signIn, signOut, useSession } from 'next-auth/react';
 
-export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { data: session } = useSession();
+const menuItems = [
+  { displayText: 'About us', href: '/about-us' },
+  { displayText: 'Products', href: '/products' },
+];
 
-  const menuItems = [
-    { displayText: 'About us', href: '/about-us' },
-    { displayText: 'Products', href: '/products' },
-  ];
+const capitalizeFirstLetter = (word: string) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+export const Navbar = async () => {
+  // const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const session = await getServerSession(authOptions);
 
   return (
-    <NextUiNavbar
-      maxWidth='full'
-      className={'justify-between bg-dark-cream'}
-      onMenuOpenChange={setIsMenuOpen}
-    >
+    <NextUiNavbar maxWidth='full' className={'justify-between bg-dark-cream'}>
       <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className='sm:hidden'
-        />
+        <NavbarMenuToggle className='sm:hidden' />
+        <NavbarMenu>
+          {menuItems.map((item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <Link
+                color={'primary'}
+                className='w-full'
+                size='lg'
+                href={item.href}
+              >
+                {item.displayText}
+              </Link>
+            </NavbarMenuItem>
+          ))}
+          {session && <SignOut />}
+        </NavbarMenu>
         <NavbarBrand>
           <Link href={'/'}>
             <p className='font-bold text-inherit'>Froodom</p>{' '}
@@ -51,45 +68,17 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className={'ml-auto'} justify='end'>
-        {!session && (
+        {session?.user ? (
           <NavbarItem>
-            <Button
-              as={Link}
-              color='primary'
-              onClick={() => signIn()}
-              variant='flat'
-            >
-              Login
-            </Button>
+            <Avatar
+              name={capitalizeFirstLetter(session.user?.email ?? 'Unknown')}
+              showFallback
+            />
           </NavbarItem>
-        )}
-        {session && (
-          <NavbarItem>
-            <Avatar showFallback />
-          </NavbarItem>
+        ) : (
+          <SignIn />
         )}
       </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={'primary'}
-              className='w-full'
-              size='lg'
-              href={item.href}
-            >
-              {item.displayText}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-        {session && (
-          <NavbarMenuItem>
-            <Link as={Link} color='danger' onClick={() => signOut()} size='lg'>
-              Sign out
-            </Link>
-          </NavbarMenuItem>
-        )}
-      </NavbarMenu>
     </NextUiNavbar>
   );
 };
