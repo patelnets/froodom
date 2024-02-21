@@ -1,11 +1,9 @@
-interface GetProductsResponse {
-  products: [
-    {
-      id: string;
-      name: string;
-      stores: string[];
-    },
-  ];
+export interface GetProductsResponse {
+  products: {
+    id: string;
+    name: string;
+    stores: string[];
+  }[];
 }
 
 export async function getProducts() {

@@ -1,3 +1,47 @@
+export interface Store {
+  value: string;
+  displayName: string;
+}
+
+export const STORES: Store[] = [
+  {
+    value: 'asda',
+    displayName: 'Asda',
+  },
+  {
+    value: 'tesco',
+    displayName: 'Tesco',
+  },
+  {
+    value: 'sainsburys',
+    displayName: 'Sainsbury’s',
+  },
+  {
+    value: 'morrisons',
+    displayName: 'Morrisons',
+  },
+  {
+    value: 'mands',
+    displayName: 'M and S',
+  },
+  {
+    value: 'aldi',
+    displayName: 'Aldi',
+  },
+  {
+    value: 'lidl',
+    displayName: 'Lidl',
+  },
+  {
+    value: 'amazon',
+    displayName: 'Amazon',
+  },
+  {
+    value: 'hollandAndBarrett',
+    displayName: 'Holland and Barrett',
+  },
+];
+
 interface Response {
   id: string;
   name: string;

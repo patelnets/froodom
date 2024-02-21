@@ -12,56 +12,13 @@ import { useMutation } from '@tanstack/react-query';
 import { addProduct, editProduct } from '@/fetch-queries/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { STORES } from '@/fetch-queries/products/get-product';
 
 interface Inputs {
   name: string;
   stores: string[];
   id?: string;
 }
-
-interface Store {
-  value: string;
-  displayName: string;
-}
-
-const STORES: Store[] = [
-  {
-    value: 'asda',
-    displayName: 'Asda',
-  },
-  {
-    value: 'tesco',
-    displayName: 'Tesco',
-  },
-  {
-    value: 'sainsburys',
-    displayName: 'Sainsbury’s',
-  },
-  {
-    value: 'morrisons',
-    displayName: 'Morrisons',
-  },
-  {
-    value: 'mands',
-    displayName: 'M and S',
-  },
-  {
-    value: 'aldi',
-    displayName: 'Aldi',
-  },
-  {
-    value: 'lidl',
-    displayName: 'Lidl',
-  },
-  {
-    value: 'amazon',
-    displayName: 'Amazon',
-  },
-  {
-    value: 'hollandAndBarrett',
-    displayName: 'Holland and Barrett',
-  },
-];
 
 function ControlledInput(props: UseControllerProps<Inputs>) {
   const { field, fieldState } = useController(props);
