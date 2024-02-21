@@ -120,7 +120,9 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
         Submit
       </Button>
       <Divider className={'my-2'} />
-      {initialValues && <ProductImages imageUrls={initialValues.image_urls} />}
+      {initialValues?.image_urls && (
+        <ProductImages imageUrls={initialValues.image_urls} />
+      )}
 
       {initialValues?.id && (
         <div className={'my-4'}>
