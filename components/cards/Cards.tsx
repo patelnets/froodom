@@ -8,9 +8,9 @@ interface Product {
 }
 export const Cards = ({ products }: { products: Product[] }) => {
   return (
-    <div className='gap-2 grid grid-cols-2 sm:grid-cols-4'>
+    <div className='gap-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'>
       {products.map(({ name, id, stores }, index) => (
-        <Link key={id} href={`/product/${id}`}>
+        <Link className={'w-fit'} key={id} href={`/product/${id}`}>
           <Card
             className={'bg-light-cream'}
             shadow='sm'
