@@ -1,16 +1,23 @@
 'use client';
 
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  UseControllerProps,
+  useController,
+} from 'react-hook-form';
 import { Input, CheckboxGroup, Checkbox, Button } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { addProduct } from '@/fetch-queries/products';
+import { addProduct, editProduct } from '@/fetch-queries/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-type Inputs = {
+interface Inputs {
   name: string;
   stores: string[];
-};
+  id?: string;
+}
 
 interface Store {
   value: string;
@@ -18,10 +25,6 @@ interface Store {
 }
 
 const STORES: Store[] = [
-  {
-    value: 'asda',
-    displayName: 'Asda',
-  },
   {
     value: 'asda',
     displayName: 'Asda',
@@ -60,44 +63,73 @@ const STORES: Store[] = [
   },
 ];
 
-export const AddNewProductForm = () => {
+function ControlledInput(props: UseControllerProps<Inputs>) {
+  const { field, fieldState } = useController(props);
+
+  return (
+    // @ts-ignore TODO Check how to narrow type
+    <Input
+      isRequired
+      label='Name'
+      className='max-w-xs'
+      placeholder={props.name}
+      {...field}
+    />
+  );
+}
+
+export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
   const { data: session } = useSession();
   const router = useRouter();
-
-  const { mutate, isPending, data } = useMutation({
+  const { mutate: mutateAdd, isPending: isPendingAdd } = useMutation({
     mutationFn: addProduct,
+    throwOnError: true,
+  });
+  const { mutate: mutateEdit, isPending: isPendingEdit } = useMutation({
+    mutationFn: editProduct,
     throwOnError: true,
   });
 
   const {
     control,
-    register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: initialValues || { name: '', stores: [] },
+  });
+
   // @ts-ignore TODO: fix
   if (!session?.token.id_token) {
     return null;
   }
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    mutate(
-      {
-        // @ts-ignore TODO: fix
-        token: session?.token.id_token,
-        data: { name: data.name, stores: data.stores },
-      },
-      { onSuccess: () => router.push('/products') }
-    );
+    if (initialValues?.id) {
+      mutateEdit(
+        {
+          // @ts-ignore TODO: fix
+          token: session?.token.id_token,
+          data: { name: data.name, stores: data.stores, id: initialValues.id },
+        },
+        { onSuccess: () => router.push('/products') }
+      );
+    } else {
+      mutateAdd(
+        {
+          // @ts-ignore TODO: fix
+          token: session?.token.id_token,
+          data: { name: data.name, stores: data.stores },
+        },
+        { onSuccess: () => router.push('/products') }
+      );
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        isRequired
-        label='Name'
-        className='max-w-xs'
-        {...register('name', { required: true })}
+      <ControlledInput
+        name='name'
+        control={control}
+        rules={{ required: true }}
       />
 
       {errors.name && <span>This field is required</span>}

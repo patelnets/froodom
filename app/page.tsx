@@ -3,7 +3,7 @@
 
 import { Products } from '@/components/products/Products';
 import { getProducts } from '@/fetch-queries/products';
-import { AddNewProductForm } from '@/components/products/AddNewProductForm';
+import { ProductForm } from '@/components/products/ProductForm';
 
 const STORES = [
   { label: 'Tesco', value: 'tesco', description: 'Tesco' },

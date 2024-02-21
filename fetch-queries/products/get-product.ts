@@ -6,7 +6,7 @@ interface Response {
 
 export async function getProduct({ id }: { id: string }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/product/${id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
     {
       method: 'GET',
     }
