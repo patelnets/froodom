@@ -46,6 +46,8 @@ interface Response {
   id: string;
   name: string;
   stores: string[];
+  image_urls: Record<string, string>;
+  header_image: string;
 }
 
 export async function getProduct({ id }: { id: string }) {

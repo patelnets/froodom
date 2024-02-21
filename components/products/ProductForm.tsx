@@ -13,10 +13,15 @@ import { addProduct, editProduct } from '@/fetch-queries/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { STORES } from '@/fetch-queries/products/get-product';
+import { ImageUploads } from '@/components/products/ImageUploads';
+import { Image } from '@nextui-org/react';
+import { Divider } from '@nextui-org/divider';
+import { ProductImages } from '@/components/products/ProductImages';
 
 interface Inputs {
   name: string;
   stores: string[];
+  image_urls: Record<string, string>;
   id?: string;
 }
 
@@ -81,6 +86,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
     }
   };
 
+  console.log(initialValues);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ControlledInput
@@ -110,10 +116,17 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
           </CheckboxGroup>
         )}
       />
-
       <Button className={'mt-5'} type='submit'>
         Submit
       </Button>
+      <Divider className={'my-2'} />
+      {initialValues && <ProductImages imageUrls={initialValues.image_urls} />}
+
+      {initialValues?.id && (
+        <div className={'my-4'}>
+          <ImageUploads productId={initialValues?.id} />
+        </div>
+      )}
     </form>
   );
 };
