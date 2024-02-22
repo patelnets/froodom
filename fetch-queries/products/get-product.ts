@@ -5,40 +5,40 @@ export interface Store {
 
 export const STORES: Store[] = [
   {
-    value: 'asda',
-    displayName: 'Asda',
-  },
-  {
-    value: 'tesco',
-    displayName: 'Tesco',
-  },
-  {
-    value: 'sainsburys',
-    displayName: 'Sainsbury’s',
-  },
-  {
-    value: 'morrisons',
-    displayName: 'Morrisons',
-  },
-  {
-    value: 'mands',
-    displayName: 'M and S',
-  },
-  {
     value: 'aldi',
     displayName: 'Aldi',
-  },
-  {
-    value: 'lidl',
-    displayName: 'Lidl',
   },
   {
     value: 'amazon',
     displayName: 'Amazon',
   },
   {
+    value: 'asda',
+    displayName: 'Asda',
+  },
+  {
     value: 'hollandAndBarrett',
     displayName: 'Holland and Barrett',
+  },
+  {
+    value: 'lidl',
+    displayName: 'Lidl',
+  },
+  {
+    value: 'mands',
+    displayName: 'M&S',
+  },
+  {
+    value: 'morrisons',
+    displayName: 'Morrisons',
+  },
+  {
+    value: 'sainsburys',
+    displayName: 'Sainsbury’s',
+  },
+  {
+    value: 'tesco',
+    displayName: 'Tesco',
   },
 ];
 
