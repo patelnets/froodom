@@ -7,7 +7,9 @@ export default async function Home() {
 
   return (
     <div className={'p-2 flex flex-col items-center'}>
-      <h1 className={'text-2xl font-bold'}>Swaminarayan friendly food</h1>
+      <h1 className={'text-2xl font-bold my-4 text-center'}>
+        Swaminarayan friendly food
+      </h1>
       <Products products={data} />
     </div>
   );
