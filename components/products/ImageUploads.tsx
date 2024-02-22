@@ -6,6 +6,7 @@ import { postImages } from '@/fetch-queries/products/post-image';
 import { useSession } from 'next-auth/react';
 import { Button } from '@nextui-org/react';
 import ArrowUpOnSquareIcon from '@heroicons/react/20/solid/ArrowUpOnSquareStackIcon';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   productId: string;
@@ -16,6 +17,7 @@ export const ImageUploads = ({ productId }: Props) => {
     throwOnError: true,
   });
   const { data: session } = useSession();
+  const router = useRouter();
 
   const [files, setFiles] = useState<File[]>([]);
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -34,12 +36,20 @@ export const ImageUploads = ({ productId }: Props) => {
       formdata.append('files', file);
     }
 
-    mutateUpload({
-      id: productId,
-      files: formdata,
-      // @ts-ignore
-      token: session?.token.id_token,
-    });
+    mutateUpload(
+      {
+        id: productId,
+        files: formdata,
+        // @ts-ignore
+        token: session?.token.id_token,
+      },
+      {
+        onSuccess: () => {
+          router.refresh();
+          setFiles([]);
+        },
+      }
+    );
   };
 
   return (
@@ -53,11 +63,26 @@ export const ImageUploads = ({ productId }: Props) => {
         <input {...getInputProps()} />
         {isDragActive ? (
           <p>Drop the files here</p>
+        ) : files.length > 0 ? (
+          <div>
+            <p>{files.length} file(s)</p>
+            <ul>
+              {files.map((file) => (
+                <li key={file.name}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
         ) : (
           <ArrowUpOnSquareIcon width={25} />
         )}
       </div>
-      <Button onClick={onHandleUpload}>Upload images</Button>
+      <Button
+        isLoading={isPending}
+        isDisabled={files.length === 0}
+        onClick={onHandleUpload}
+      >
+        Upload images
+      </Button>
     </div>
   );
 };

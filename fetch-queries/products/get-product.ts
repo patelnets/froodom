@@ -59,9 +59,9 @@ export async function getProduct({ id }: { id: string }) {
   );
 
   if (!response.ok) {
-    const data: { message: string } = await response.json();
+    const data: { detail: string } = await response.json();
     console.error(data);
-    throw new Error(data.message || 'An error occurred');
+    throw new Error(data.detail || 'An error occurred');
   }
   const data: Response = await response.json();
   return data;

@@ -72,7 +72,12 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
           token: session?.token.id_token,
           data: { name: data.name, stores: data.stores, id: initialValues.id },
         },
-        { onSuccess: () => router.push('/products') }
+        {
+          onSuccess: () => {
+            router.refresh();
+            router.push('/products');
+          },
+        }
       );
     } else {
       mutateAdd(
@@ -81,12 +86,16 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
           token: session?.token.id_token,
           data: { name: data.name, stores: data.stores },
         },
-        { onSuccess: () => router.push('/products') }
+        {
+          onSuccess: () => {
+            router.refresh();
+            router.push('/products');
+          },
+        }
       );
     }
   };
 
-  console.log(initialValues);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ControlledInput
