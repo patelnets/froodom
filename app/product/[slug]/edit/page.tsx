@@ -3,6 +3,8 @@ import { getProduct } from '@/fetch-queries/products/get-product';
 
 import { ProductForm } from '@/components/products/ProductForm';
 
+export const revalidate = 0;
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const product = await getProduct({ id: params.slug });
 

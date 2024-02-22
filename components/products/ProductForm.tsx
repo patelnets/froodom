@@ -41,6 +41,7 @@ function ControlledInput(props: UseControllerProps<Inputs>) {
 }
 
 export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
+  console.log('initialValues', initialValues);
   const { data: session } = useSession();
   const router = useRouter();
   const { mutate: mutateAdd, isPending: isPendingAdd } = useMutation({
