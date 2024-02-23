@@ -1,43 +1,21 @@
 import { getProducts } from '@/fetch-queries/products';
-import { getProduct, STORES } from '@/fetch-queries/products/get-product';
+import { getProduct } from '@/fetch-queries/products/get-product';
 import { Button } from '@nextui-org/button';
 import Link from 'next/link';
-import { Image } from '@nextui-org/image';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/libs/next-auth';
 import { DeleteProduct } from '@/components/products/Delete';
+import { Product } from '@/components/products/Product';
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const session = await getServerSession(authOptions);
   const product = await getProduct({ id: params.slug });
 
-  console.log('product', product);
-
   return (
-    <div className={'flex gap-2 flex-col justify-center items-center'}>
-      <h1 className={'text-2xl'}> {product.name} </h1>
-      <Image
-        shadow='sm'
-        radius='lg'
-        width='100%'
-        alt={product.name}
-        className='w-full object-cover h-[300px]'
-        src={
-          product.header_image
-            ? product.header_image
-            : '/images/products/placeholder.png'
-        }
-      />
-      <h2 className={'text-xl mt-2'}>Available at</h2>
-      <ul>
-        {product.stores.map((store) => (
-          <li key={store}>
-            {STORES.find(({ value }) => value === store)?.displayName}
-          </li>
-        ))}
-      </ul>
+    <div className={'flex flex-col justify-center items-center'}>
+      <Product product={product} />
       {session && (
-        <div className={'flex gap-2'}>
+        <div className={'flex gap-2 my-2'}>
           <Link className={'self-start'} href={`/product/${params.slug}/edit`}>
             <Button color='primary'>Edit</Button>
           </Link>
