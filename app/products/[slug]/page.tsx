@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Product product={product} />
       {session && (
         <div className={'flex gap-2 my-2'}>
-          <Link className={'self-start'} href={`/product/${params.slug}/edit`}>
+          <Link className={'self-start'} href={`/products/${params.slug}/edit`}>
             <Button color='primary'>Edit</Button>
           </Link>
           <DeleteProduct id={product.id} />

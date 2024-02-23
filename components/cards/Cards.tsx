@@ -12,7 +12,7 @@ export const Cards = ({
   return (
     <div className='gap-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'>
       {products.map(({ name, id, stores, header_image }, index) => (
-        <Link className={'w-full'} key={id} href={`/product/${id}`}>
+        <Link className={'w-full'} key={id} href={`/products/${id}`}>
           <Card
             className={'bg-light-cream w-full'}
             shadow='sm'
