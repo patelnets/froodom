@@ -12,11 +12,11 @@ const getFilteredProducts = (
   selectedStores: string[]
 ) => {
   const products: GetProductsResponse['products'] = [];
-  if (selectedStores.includes('all') || !selectedStores.length) {
+  if (selectedStores.includes('all') || selectedStores.length == 0) {
     return allProducts;
   } else {
-    for (const product of allProducts) {
-      if (product.stores.some((store) => selectedStores.includes(store))) {
+    for (const product of allProducts.slice(10)) {
+      if (product.stores.some((store) => store === selectedStores[0])) {
         products.push(product);
       }
     }
@@ -31,19 +31,17 @@ export const Products = ({ products }: { products: GetProductsResponse }) => {
     initialData: products,
   });
 
-  const [selectedStores, setSelectedStores] = useState<string[]>([]);
-
+  const [selectedStores, setSelectedStores] = useState<string[]>(['all']);
   // TODO: figure out a better way of doing this, it will start to be a bottleneck at scale
   const filteredProducts = useMemo(
     () => getFilteredProducts(data.products, selectedStores),
-    [data.products, selectedStores]
+    [data.products, JSON.stringify(selectedStores)]
   );
 
   return (
     <div className={'flex flex-col gap-4 w-full'}>
       <Select
         label='Select a store'
-        placeholder='Select an animal'
         defaultSelectedKeys={['all']}
         // selectionMode='multiple'
         className='max-w-xs'
