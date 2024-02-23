@@ -18,7 +18,7 @@ export const STORES: Store[] = [
   },
   {
     value: 'hollandAndBarrett',
-    displayName: 'Holland and Barrett',
+    displayName: 'Holland & Barrett',
   },
   {
     value: 'lidl',
@@ -39,6 +39,10 @@ export const STORES: Store[] = [
   {
     value: 'tesco',
     displayName: 'Tesco',
+  },
+  {
+    value: 'waitrose',
+    displayName: 'Waitrose',
   },
 ];
 

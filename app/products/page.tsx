@@ -8,7 +8,6 @@ import { authOptions } from '@/libs/next-auth';
 export default async function Home() {
   const data = await getProducts();
   const session = await getServerSession(authOptions);
-
   return (
     <div className={'flex flex-col gap-2'}>
       {session && (
