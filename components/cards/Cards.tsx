@@ -20,12 +20,18 @@ export const Cards = ({
             onPress={() => console.log('item pressed', name)}
           >
             <CardBody className='w-full overflow-visible p-0 relative h-[140px]'>
-              <Image
-                alt={name}
-                fill={true}
-                className=' object-cover'
-                src={header_image}
-              />
+              {header_image ? (
+                <Image
+                  alt={name}
+                  fill={true}
+                  className='object-cover'
+                  src={header_image}
+                />
+              ) : (
+                <div className='w-full h-full bg-gray-300 p-4 flex justify-center items-center'>
+                  <p>Image coming soon!</p>
+                </div>
+              )}
             </CardBody>
             <CardFooter className='text-small justify-between'>
               <b className={'text-ellipsis whitespace-nowrap overflow-hidden'}>

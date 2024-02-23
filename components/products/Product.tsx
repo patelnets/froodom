@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { STORES } from '@/fetch-queries/products/get-product';
 import { GetProductsResponse } from '@/fetch-queries/products';
+import React from 'react';
 
 interface Props {
   product: GetProductsResponse['products'][0];
@@ -14,12 +15,18 @@ export const Product = ({ product }: Props) => {
           'h-[180px] w-[320px] relative w-full rounded-lg overflow-hidden'
         }
       >
-        <Image
-          alt={product.name}
-          className='w-full object-cover'
-          src={product.header_image}
-          fill={true}
-        />
+        {product.header_image ? (
+          <Image
+            alt={product.name}
+            className='w-full object-cover'
+            src={product.header_image}
+            fill={true}
+          />
+        ) : (
+          <div className='w-full h-full bg-gray-300 p-4 flex justify-center items-center'>
+            <p>Image coming soon!</p>
+          </div>
+        )}
       </div>
       <h2 className={'text-xl mt-2'}>Available at</h2>
       <ul>

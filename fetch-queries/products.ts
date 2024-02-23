@@ -4,7 +4,7 @@ export interface GetProductsResponse {
     name: string;
     stores: string[];
     image_urls: Record<string, string>;
-    header_image: string;
+    header_image?: string;
   }[];
 }
 
