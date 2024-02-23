@@ -4,31 +4,22 @@ interface Response {
   stores: string[];
 }
 
-export async function postImages({
-  id,
-  files,
-  token,
+export async function postImageUsingPreSignedUrl({
+  url,
+  file,
 }: {
-  id: string;
-  files: FormData;
-  token: string;
+  url: string;
+  file: File;
 }) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}/images`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      body: files,
-    }
-  );
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: file,
+  });
 
   if (!response.ok) {
     const data: { message: string } = await response.json();
     console.error(data);
     throw new Error(data.message || 'An error occurred');
   }
-  const data: Response = await response.json();
-  return data;
+  return;
 }

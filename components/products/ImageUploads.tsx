@@ -1,22 +1,30 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useMutation } from '@tanstack/react-query';
-import { addProduct } from '@/fetch-queries/products';
-import { postImages } from '@/fetch-queries/products/post-image';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { postImageUsingPreSignedUrl } from '@/fetch-queries/products/post-image';
 import { useSession } from 'next-auth/react';
 import { Button } from '@nextui-org/react';
 import ArrowUpOnSquareIcon from '@heroicons/react/20/solid/ArrowUpOnSquareStackIcon';
 import { useRouter } from 'next/navigation';
+import { getPreSignedUrl } from '@/fetch-queries/products/get-pre-signed-url';
 
 interface Props {
   productId: string;
 }
 export const ImageUploads = ({ productId }: Props) => {
+  const { data: session } = useSession();
+
+  const { data } = useQuery({
+    queryKey: ['preSignedUrl', productId],
+    queryFn: () =>
+      // @ts-ignore
+      getPreSignedUrl({ id: productId, token: session?.token.id_token }),
+  });
   const { mutate: mutateUpload, isPending: isPending } = useMutation({
-    mutationFn: postImages,
+    mutationFn: postImageUsingPreSignedUrl,
     throwOnError: true,
   });
-  const { data: session } = useSession();
+
   const router = useRouter();
 
   const [files, setFiles] = useState<File[]>([]);
@@ -31,17 +39,15 @@ export const ImageUploads = ({ productId }: Props) => {
   });
 
   const onHandleUpload = () => {
-    const formdata = new FormData();
-    for (const file of files) {
-      formdata.append('files', file);
+    if (!data) {
+      console.log('No data');
+      return;
     }
 
     mutateUpload(
       {
-        id: productId,
-        files: formdata,
-        // @ts-ignore
-        token: session?.token.id_token,
+        url: data.url,
+        file: files[0],
       },
       {
         onSuccess: () => {
