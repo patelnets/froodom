@@ -14,7 +14,7 @@ interface Props {
 export const ImageUploads = ({ productId }: Props) => {
   const { data: session } = useSession();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['preSignedUrl', productId],
     queryFn: () =>
       // @ts-ignore
@@ -35,7 +35,7 @@ export const ImageUploads = ({ productId }: Props) => {
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    multiple: true,
+    multiple: false,
   });
 
   const onHandleUpload = () => {
@@ -53,6 +53,7 @@ export const ImageUploads = ({ productId }: Props) => {
         onSuccess: () => {
           router.refresh();
           setFiles([]);
+          refetch();
         },
       }
     );
@@ -71,7 +72,6 @@ export const ImageUploads = ({ productId }: Props) => {
           <p>Drop the files here</p>
         ) : files.length > 0 ? (
           <div>
-            <p>{files.length} file(s)</p>
             <ul>
               {files.map((file) => (
                 <li key={file.name}>{file.name}</li>
