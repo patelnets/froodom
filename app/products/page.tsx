@@ -5,6 +5,8 @@ import { Link } from '@nextui-org/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/libs/next-auth';
 
+export const revalidate = 60;
+
 export default async function Home() {
   const data = await getProducts();
   const session = await getServerSession(authOptions);

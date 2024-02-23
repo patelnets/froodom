@@ -7,6 +7,8 @@ import { authOptions } from '@/libs/next-auth';
 import { DeleteProduct } from '@/components/products/Delete';
 import { Product } from '@/components/products/Product';
 
+export const revalidate = 60;
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const session = await getServerSession(authOptions);
   const product = await getProduct({ id: params.slug });
