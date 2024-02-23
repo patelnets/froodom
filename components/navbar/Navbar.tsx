@@ -1,5 +1,3 @@
-'use server';
-
 import React from 'react';
 import { Link } from '@nextui-org/link';
 import {
@@ -48,29 +46,31 @@ export const Navbar = async () => {
           ))}
           {session && <SignOut />}
         </NavbarMenu>
-        <NavbarBrand>
+        <NavbarBrand className={'grow-0'}>
           <Link href={'/'}>
             <p className='font-bold text-inherit'>Froodom</p>{' '}
           </Link>
         </NavbarBrand>
-        <NavbarItem className='hidden sm:flex'>
-          <Link color='primary' href='/products'>
-            Products
-          </Link>
-        </NavbarItem>
-        <NavbarItem className='hidden sm:flex'>
-          <Link href='/about-us'>About us</Link>
-        </NavbarItem>
+        {menuItems.map((item, index) => (
+          <NavbarItem key={`${item}-${index}`} className='hidden sm:flex'>
+            <Link href={item.href}>{item.displayText}</Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
 
       <NavbarContent className={'ml-auto'} justify='end'>
-        {session?.user ? (
-          <NavbarItem>
-            <Avatar
-              name={capitalizeFirstLetter(session.user?.email ?? 'Unknown')}
-              showFallback
-            />
-          </NavbarItem>
+        {session ? (
+          <>
+            <NavbarItem className='hidden sm:flex'>
+              <SignOut />
+            </NavbarItem>
+            <NavbarItem>
+              <Avatar
+                name={capitalizeFirstLetter(session.user?.email ?? 'Unknown')}
+                showFallback
+              />
+            </NavbarItem>
+          </>
         ) : (
           <SignIn />
         )}
