@@ -10,15 +10,11 @@ export const Product = ({ product }: Props) => {
   return (
     <div className={'flex gap-2 flex-col justify-center items-center'}>
       <h1 className={'text-2xl'}> {product.name} </h1>
-      <div
-        className={
-          'h-[180px] w-[320px] relative w-full rounded-lg overflow-hidden'
-        }
-      >
+      <div className={'relative w-full h-[40vh] rounded-lg overflow-hidden'}>
         {product.header_image ? (
           <Image
             alt={product.name}
-            className='w-full object-cover'
+            className='w-full object-contain'
             src={product.header_image}
             fill={true}
           />
