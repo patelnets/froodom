@@ -19,7 +19,7 @@ export const Cards = ({
             isPressable
             onPress={() => console.log('item pressed', name)}
           >
-            <CardBody className='w-full overflow-visible p-0 relative h-[140px]'>
+            <CardBody className='w-full overflow-visible p-0 relative h-[200px]'>
               {header_image ? (
                 <Image
                   alt={name}
