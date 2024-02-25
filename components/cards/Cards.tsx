@@ -2,13 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import { Link } from '@nextui-org/link';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
-import { GetProductsResponse } from '@/api/products';
+import { Product } from '@/api/products';
 
-export const Cards = ({
-  products,
-}: {
-  products: GetProductsResponse['products'];
-}) => {
+export const Cards = ({ products }: { products: Product[] }) => {
   return (
     <div className='gap-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'>
       {products.map(({ name, id, stores, header_image }, index) => (

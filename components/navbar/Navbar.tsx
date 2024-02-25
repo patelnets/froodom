@@ -71,9 +71,7 @@ export const Navbar = async () => {
               />
             </NavbarItem>
           </>
-        ) : (
-          <SignIn />
-        )}
+        ) : null}
       </NavbarContent>
     </NextUiNavbar>
   );

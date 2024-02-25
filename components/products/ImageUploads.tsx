@@ -1,12 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { postImageUsingPreSignedUrl } from '@/api/products/upload-image';
+import { getPreSignedUrl, postImageUsingPreSignedUrl } from '@/api/products';
 import { useSession } from 'next-auth/react';
 import { Button } from '@nextui-org/react';
 import ArrowUpOnSquareIcon from '@heroicons/react/20/solid/ArrowUpOnSquareStackIcon';
 import { useRouter } from 'next/navigation';
-import { getPreSignedUrl } from '@/api/products/get-pre-signed-url';
 
 interface Props {
   productId: string;

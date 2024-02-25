@@ -3,15 +3,14 @@ import { Select, SelectItem } from '@nextui-org/react';
 import { Cards } from '@/components/cards/Cards';
 
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, GetProductsResponse } from '@/api/products';
-import { STORES } from '@/api/products/get-product';
+import { getProducts, Product, STORES } from '@/api/products';
 import { useMemo, useState } from 'react';
 
 const getFilteredProducts = (
-  allProducts: GetProductsResponse['products'],
+  allProducts: Product[],
   selectedStores: string[]
 ) => {
-  const products: GetProductsResponse['products'] = [];
+  const products: Product[] = [];
   if (selectedStores.includes('all') || selectedStores.length == 0) {
     return allProducts;
   } else {
@@ -24,7 +23,11 @@ const getFilteredProducts = (
   }
 };
 
-export const Products = ({ products }: { products: GetProductsResponse }) => {
+export const Products = ({
+  products,
+}: {
+  products: Awaited<ReturnType<typeof getProducts>>;
+}) => {
   const { data } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts,

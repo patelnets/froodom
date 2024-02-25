@@ -13,7 +13,6 @@ import { addProduct, editProduct, STORES } from '@/api/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ImageUploads } from '@/components/products/ImageUploads';
-import { Image } from '@nextui-org/react';
 import { Divider } from '@nextui-org/divider';
 import { ProductImages } from '@/components/products/ProductImages';
 
