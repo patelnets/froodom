@@ -9,10 +9,9 @@ import {
 } from 'react-hook-form';
 import { Input, CheckboxGroup, Checkbox, Button } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { addProduct, editProduct } from '@/fetch-queries/products';
+import { addProduct, editProduct, STORES } from '@/api/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { STORES } from '@/fetch-queries/products/get-product';
 import { ImageUploads } from '@/components/products/ImageUploads';
 import { Image } from '@nextui-org/react';
 import { Divider } from '@nextui-org/divider';

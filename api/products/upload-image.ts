@@ -1,12 +1,30 @@
-export interface PreSignedUrlResponse {
+import { Product } from '@/api/products/types';
+
+export async function postImageUsingPreSignedUrl({
+  url,
+  file,
+}: {
   url: string;
+  file: File;
+}) {
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: file,
+  });
+
+  if (!response.ok) {
+    const data: { message: string } = await response.json();
+    console.error(data);
+    throw new Error(data.message || 'An error occurred');
+  }
+  return;
 }
 
 export async function getPreSignedUrl({
   id,
   token,
 }: {
-  id: string;
+  id: Product['id'];
   token: string;
 }) {
   const response = await fetch(
@@ -24,6 +42,8 @@ export async function getPreSignedUrl({
     console.error(data);
     throw new Error(data.detail || 'An error occurred');
   }
-  const data: PreSignedUrlResponse = await response.json();
+  const data: {
+    url: string;
+  } = await response.json();
   return data;
 }

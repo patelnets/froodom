@@ -3,6 +3,14 @@ export interface Store {
   displayName: string;
 }
 
+export type Product = {
+  id: string;
+  name: string;
+  stores: string[];
+  image_urls: Record<string, string>;
+  header_image: string;
+};
+
 export const STORES: Store[] = [
   {
     value: 'aldi',
@@ -45,28 +53,3 @@ export const STORES: Store[] = [
     displayName: 'Waitrose',
   },
 ];
-
-interface Response {
-  id: string;
-  name: string;
-  stores: string[];
-  image_urls: Record<string, string>;
-  header_image: string;
-}
-
-export async function getProduct({ id }: { id: string }) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
-    {
-      method: 'GET',
-    }
-  );
-
-  if (!response.ok) {
-    const data: { detail: string } = await response.json();
-    console.error(data);
-    throw new Error(data.detail || 'An error occurred');
-  }
-  const data: Response = await response.json();
-  return data;
-}

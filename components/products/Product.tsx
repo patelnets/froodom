@@ -1,10 +1,9 @@
 import Image from 'next/image';
-import { STORES } from '@/fetch-queries/products/get-product';
-import { GetProductsResponse } from '@/fetch-queries/products';
 import React from 'react';
+import { STORES, type Product as IProduct } from '@/api/products';
 
 interface Props {
-  product: GetProductsResponse['products'][0];
+  product: IProduct;
 }
 export const Product = ({ product }: Props) => {
   return (

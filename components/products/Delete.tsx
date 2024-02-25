@@ -2,7 +2,7 @@
 
 import { Button } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { deleteProduct } from '@/fetch-queries/products/delete-product';
+import { deleteProduct } from '@/api/products/delete-product';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 

@@ -1,8 +1,10 @@
+import { Product } from '@/api/products/types';
+
 export async function deleteProduct({
   id,
   token,
 }: {
-  id: string;
+  id: Product['id'];
   token: string;
 }) {
   const response = await fetch(
@@ -20,6 +22,5 @@ export async function deleteProduct({
     console.error(data);
     throw new Error(data.message || 'An error occurred');
   }
-  const data = await response.json();
-  return data;
+  return await response.json();
 }

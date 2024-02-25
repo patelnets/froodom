@@ -1,5 +1,5 @@
 import { Products } from '@/components/products/Products';
-import { getProducts } from '@/fetch-queries/products';
+import { getProducts } from '@/api/products';
 import { Button } from '@nextui-org/button';
 import { Link } from '@nextui-org/link';
 import { getServerSession } from 'next-auth';

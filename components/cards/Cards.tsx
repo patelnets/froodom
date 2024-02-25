@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Link } from '@nextui-org/link';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
-import { GetProductsResponse } from '@/fetch-queries/products';
+import { GetProductsResponse } from '@/api/products';
 
 export const Cards = ({
   products,

@@ -3,8 +3,8 @@ import { Select, SelectItem } from '@nextui-org/react';
 import { Cards } from '@/components/cards/Cards';
 
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, GetProductsResponse } from '@/fetch-queries/products';
-import { STORES } from '@/fetch-queries/products/get-product';
+import { getProducts, GetProductsResponse } from '@/api/products';
+import { STORES } from '@/api/products/get-product';
 import { useMemo, useState } from 'react';
 
 const getFilteredProducts = (

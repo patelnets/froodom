@@ -1,5 +1,5 @@
 import { Products } from '@/components/products/Products';
-import { getProducts } from '@/fetch-queries/products';
+import { getProducts } from '@/api/products';
 import { ProductForm } from '@/components/products/ProductForm';
 
 export default async function Home() {
