@@ -9,6 +9,12 @@ const nextConfig = {
         port: '',
         pathname: '/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'froodom-frontend.s3.eu-west-2.amazonaws.com',
+        port: '',
+        pathname: '/images/**',
+      },
     ],
   },
 };
