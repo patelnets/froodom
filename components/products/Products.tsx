@@ -5,21 +5,19 @@ import { Cards } from '@/components/cards/Cards';
 import { useQuery } from '@tanstack/react-query';
 import { getProducts, Product, STORES } from '@/api/products';
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
+import ShoppingBagLogo from '../../public/images/stores/shopping-bag.webp';
 
 const getFilteredProducts = (
   allProducts: Product[],
   selectedStores: string[]
 ) => {
-  const products: Product[] = [];
   if (selectedStores.includes('all') || selectedStores.length == 0) {
     return allProducts;
   } else {
-    for (const product of allProducts.slice(10)) {
-      if (product.stores.some((store) => store === selectedStores[0])) {
-        products.push(product);
-      }
-    }
-    return products;
+    return allProducts.filter((product) =>
+      product.stores.some((store) => store === selectedStores[0])
+    );
   }
 };
 
@@ -46,22 +44,28 @@ export const Products = ({
       <Select
         label='Select a store'
         defaultSelectedKeys={['all']}
-        // selectionMode='multiple'
         className='max-w-xs'
         onChange={(event) => {
-          // split up the text by comma and remove any whitespace and save to state
           setSelectedStores(
             event.target.value.split(',').map((store) => store.trim())
           );
         }}
       >
-        {[{ value: 'all', displayName: 'All stores' }, ...STORES].map(
-          (store) => (
-            <SelectItem key={store.value} value={store.value}>
-              {store.displayName}
-            </SelectItem>
-          )
-        )}
+        {[
+          { value: 'all', displayName: 'All stores', logo: ShoppingBagLogo },
+          ...STORES,
+        ].map((store) => (
+          <SelectItem
+            textValue={store.displayName}
+            key={store.value}
+            value={store.value}
+          >
+            <div className={'flex justify-between'}>
+              <p>{store.displayName}</p>
+              <Image src={store.logo} alt={store.displayName} width={20} />
+            </div>
+          </SelectItem>
+        ))}
       </Select>
 
       <Cards products={filteredProducts} />

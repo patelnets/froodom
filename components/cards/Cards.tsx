@@ -9,12 +9,7 @@ export const Cards = ({ products }: { products: Product[] }) => {
     <div className='gap-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'>
       {products.map(({ name, id, stores, header_image }, index) => (
         <Link className={'w-full'} key={id} href={`/products/${id}`}>
-          <Card
-            className={'bg-light-cream w-full'}
-            shadow='sm'
-            isPressable
-            onPress={() => console.log('item pressed', name)}
-          >
+          <Card className={'bg-light-cream w-full'} shadow='sm' isPressable>
             <CardBody className='w-full overflow-visible p-0 relative h-[200px]'>
               {header_image ? (
                 <Image

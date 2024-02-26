@@ -9,7 +9,6 @@ import {
   NavbarMenuToggle,
   Navbar as NextUiNavbar,
 } from '@nextui-org/navbar';
-import { SignIn } from '@/components/navbar/SignIn';
 import { getServerSession } from 'next-auth';
 import { Avatar } from '@nextui-org/avatar';
 import { SignOut } from '@/components/navbar/SignOut';
@@ -47,7 +46,7 @@ export const Navbar = async () => {
           {session && <SignOut />}
         </NavbarMenu>
         <NavbarBrand className={'grow-0'}>
-          <Link href={'/'}>
+          <Link href={'/'} className={'flex gap-2'}>
             <p className='font-bold text-inherit'>Froodom</p>{' '}
           </Link>
         </NavbarBrand>
