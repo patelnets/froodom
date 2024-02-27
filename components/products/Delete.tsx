@@ -20,8 +20,7 @@ export const DeleteProduct = ({ id }: Props) => {
 
   const onHandleDelete = () => {
     mutateDelete(
-      // @ts-ignore
-      { id, token: session?.token.id_token },
+      { id, token: session?.token.id_token ?? '' },
       {
         onSuccess: () => router.push('/products'),
       }

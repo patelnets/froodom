@@ -58,7 +58,6 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
     defaultValues: initialValues || { name: '', stores: [] },
   });
 
-  // @ts-ignore TODO: fix
   if (!session?.token.id_token) {
     return null;
   }
@@ -66,8 +65,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
     if (initialValues?.id) {
       mutateEdit(
         {
-          // @ts-ignore TODO: fix
-          token: session?.token.id_token,
+          token: session?.token.id_token ?? '',
           data: { name: data.name, stores: data.stores, id: initialValues.id },
         },
         {
@@ -80,8 +78,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
     } else {
       mutateAdd(
         {
-          // @ts-ignore TODO: fix
-          token: session?.token.id_token,
+          token: session?.token.id_token || '',
           data: { name: data.name, stores: data.stores },
         },
         {

@@ -1,6 +1,6 @@
 'use client';
 import { Select, SelectItem } from '@nextui-org/react';
-import { Cards } from '@/components/cards/Cards';
+import { ProductCards } from '@/components/products/ProductCards';
 
 import { useQuery } from '@tanstack/react-query';
 import { getProducts, Product, STORES } from '@/api/products';
@@ -68,7 +68,7 @@ export const Products = ({
         ))}
       </Select>
 
-      <Cards products={filteredProducts} />
+      <ProductCards products={filteredProducts} />
     </div>
   );
 };

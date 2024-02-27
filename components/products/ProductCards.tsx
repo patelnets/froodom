@@ -4,7 +4,7 @@ import { Link } from '@nextui-org/link';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
 import { Product } from '@/api/products';
 
-export const Cards = ({ products }: { products: Product[] }) => {
+export const ProductCards = ({ products }: { products: Product[] }) => {
   return (
     <div className='gap-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'>
       {products.map(({ name, id, stores, header_image }, index) => (

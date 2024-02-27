@@ -16,8 +16,7 @@ export const ImageUploads = ({ productId }: Props) => {
   const { data, refetch } = useQuery({
     queryKey: ['preSignedUrl', productId],
     queryFn: () =>
-      // @ts-ignore
-      getPreSignedUrl({ id: productId, token: session?.token.id_token }),
+      getPreSignedUrl({ id: productId, token: session?.token.id_token ?? '' }),
   });
   const { mutate: mutateUpload, isPending: isPending } = useMutation({
     mutationFn: postImageUsingPreSignedUrl,
