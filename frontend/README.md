@@ -1,13 +1,4 @@
-# About this repo
-
-This repo is the frontend code for www.froodom.org.
-It is a NextJS app that uses the Froodom REST API (python FastAPI) to fetch data.
-
-Hosted on Vercel and built with Typescript, TailwindCSS and NextUI.
-
-## Architecture Diagram
-
-![Architecture Diagram](./readme-assets/architecture.png)
+# Froodom frontend
 
 ## To run locally
 
