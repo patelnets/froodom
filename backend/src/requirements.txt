@@ -1,0 +1,4 @@
+mangum==0.17.0
+fastapi==0.109.2
+pydantic==2.6.1
+python-multipart==0.0.9

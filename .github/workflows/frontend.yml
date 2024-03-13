@@ -1,4 +1,4 @@
-name: Deploy CDK Project
+name: Frontend
 on:
   push:
     branches:
@@ -16,8 +16,10 @@ jobs:
         with:
           node-version: '18'
       - name: Install deps
+        working-directory: ./frontend
         run: |
           npm install
       - name: Format check
+        working-directory: ./frontend
         run: |
           npm run fmt-check
