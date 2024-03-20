@@ -36,7 +36,7 @@ export const Products = ({
   // TODO: figure out a better way of doing this, it will start to be a bottleneck at scale
   const filteredProducts = useMemo(
     () => getFilteredProducts(data.products, selectedStores),
-    [data.products, JSON.stringify(selectedStores)]
+    [data.products, selectedStores]
   );
 
   return (

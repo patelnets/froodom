@@ -4,7 +4,12 @@ export async function editProduct({
   data,
   token,
 }: {
-  data: { name: Product['name']; stores: Product['stores']; id: Product['id'] };
+  data: {
+    name: Product['name'];
+    stores: Product['stores'];
+    id: Product['id'];
+    categories: Product['categories'];
+  };
   token: string;
 }) {
   const { id, ...body } = data;
