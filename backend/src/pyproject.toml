@@ -4,5 +4,3 @@ src_paths = ["."]
 [tool.pylint]
 disable = ["C0114", "C0116", "C0115", "E0401", "W0511"]
 ignore = ["venv"]
-[tool.pylint.MASTER]
-load-plugins= "pylint_pytest"
