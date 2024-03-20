@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Link } from '@nextui-org/link';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
-import { Product } from '@/api/products';
+import { Product } from '@/queries/products';
 
 export const ProductCards = ({ products }: { products: Product[] }) => {
   return (

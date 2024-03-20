@@ -9,7 +9,7 @@ import {
 } from 'react-hook-form';
 import { Input, CheckboxGroup, Checkbox, Button } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { addProduct, editProduct, STORES } from '@/api/products';
+import { addProduct, editProduct, STORES } from '@/queries/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ImageUploads } from '@/components/products/ImageUploads';

@@ -1,4 +1,4 @@
-import { Product } from '@/api/products/types';
+import { Product } from '@/queries/products/types';
 
 export async function postImageUsingPreSignedUrl({
   url,

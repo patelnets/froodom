@@ -1,25 +1,27 @@
-import { Product } from '@/api/products/types';
+import { Product } from '@/queries/products/types';
 
-export async function addProduct({
+export async function editProduct({
   data,
   token,
 }: {
   data: {
     name: Product['name'];
     stores: Product['stores'];
+    id: Product['id'];
     categories: Product['categories'];
   };
   token: string;
 }) {
+  const { id, ...body } = data;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
     {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: token,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(body),
     }
   );
 

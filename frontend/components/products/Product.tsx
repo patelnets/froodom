@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { STORES, type Product as IProduct } from '@/api/products';
+import { STORES, type Product as IProduct } from '@/queries/products';
 
 interface Props {
   product: IProduct;

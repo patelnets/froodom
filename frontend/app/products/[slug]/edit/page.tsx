@@ -1,5 +1,5 @@
-import { getProducts } from '@/api/products';
-import { getProduct } from '@/api/products/get-product';
+import { getProducts } from '@/queries/products';
+import { getProduct } from '@/queries/products/get-product';
 
 import { ProductForm } from '@/components/products/ProductForm';
 

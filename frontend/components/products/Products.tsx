@@ -3,7 +3,7 @@ import { Select, SelectItem } from '@nextui-org/react';
 import { ProductCards } from '@/components/products/ProductCards';
 
 import { useQuery } from '@tanstack/react-query';
-import { getProducts, Product, STORES } from '@/api/products';
+import { getProducts, Product, STORES } from '@/queries/products';
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import ShoppingBagLogo from '../../public/images/stores/shopping-bag.webp';
