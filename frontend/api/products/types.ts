@@ -24,6 +24,7 @@ export type Product = {
   stores: string[];
   image_urls: Record<string, string>;
   header_image: string;
+  categories: string[];
 };
 
 export const STORES: Store[] = [

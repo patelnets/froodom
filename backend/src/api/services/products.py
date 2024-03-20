@@ -20,6 +20,8 @@ def get_all_images_for_product(product_id):
 def get_products(next_token=None):
     res = dynamo.list_products(next_token=next_token)
     for product in res["products"]:
+        if "categories" not in product:
+            product["categories"] = []
         images = get_all_images_for_product(product["id"])
         for image_id in images:
             if "image_urls" not in product:
@@ -38,6 +40,8 @@ def get_products(next_token=None):
 def get_product(product_id):
     product = dynamo.get_product(product_id)
     images = get_all_images_for_product(product_id)
+    if "categories" not in product:
+        product["categories"] = []
     for image_id in images:
         if "image_urls" not in product:
             product["image_urls"] = {}

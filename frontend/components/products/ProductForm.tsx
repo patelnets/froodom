@@ -66,7 +66,12 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
       mutateEdit(
         {
           token: session?.token.id_token ?? '',
-          data: { name: data.name, stores: data.stores, id: initialValues.id },
+          data: {
+            name: data.name,
+            stores: data.stores,
+            id: initialValues.id,
+            categories: [],
+          },
         },
         {
           onSuccess: () => {
@@ -79,7 +84,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
       mutateAdd(
         {
           token: session?.token.id_token || '',
-          data: { name: data.name, stores: data.stores },
+          data: { name: data.name, stores: data.stores, categories: [] },
         },
         {
           onSuccess: () => {

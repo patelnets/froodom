@@ -1,8 +1,14 @@
+import { Product } from '@/api/products/types';
+
 export async function addProduct({
   data,
   token,
 }: {
-  data: { name: string; stores: string[] };
+  data: {
+    name: Product['name'];
+    stores: Product['stores'];
+    categories: Product['categories'];
+  };
   token: string;
 }) {
   const response = await fetch(

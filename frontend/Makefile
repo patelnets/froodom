@@ -1,4 +1,4 @@
-fmt-write:
+fmt:
 	npm run fmt
 lint:
 	npm run lint
