@@ -18,7 +18,7 @@ class ProductNotFoundError(Error):
     pass
 
 
-def create_product(name: str, stores: list[str]) -> dict:
+def create_product(name: str, stores: list[str], categories: list[str]) -> dict:
     print("Creating product")
 
     item = {
@@ -26,6 +26,7 @@ def create_product(name: str, stores: list[str]) -> dict:
         "name": name,
         "stores": stores,
         "images": [],
+        "categories": categories,
         "created_at": datetime.now().isoformat(),
         "updated_at": datetime.now().isoformat(),
     }
@@ -62,7 +63,12 @@ def get_products_by_name(name: str) -> dict:
     return response["Items"]
 
 
-def update_product(product_id: str, stores: list[str] = None, name: str = None) -> dict:
+def update_product(
+    product_id: str,
+    stores: list[str] = None,
+    name: str = None,
+    categories: list[str] = None,
+) -> dict:
     expr = []
     attr_values = {}
     attr_names = {}
@@ -71,6 +77,11 @@ def update_product(product_id: str, stores: list[str] = None, name: str = None) 
         expr.append("#K=:k")
         attr_values[":k"] = stores
         attr_names["#K"] = "stores"
+
+    if categories is not None:
+        expr.append("#C=:c")
+        attr_values[":c"] = categories
+        attr_names["#C"] = "categories"
 
     if name is not None:
         expr.append("#N=:n")

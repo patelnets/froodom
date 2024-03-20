@@ -10,3 +10,6 @@ pylint:
 	pylint --recursive=y src serverless_backend app.py
 mypy:
 	mypy src serverless_backend app.py
+
+fmt: fmt-write isort-write
+lint: fmt-check isort-check pylint

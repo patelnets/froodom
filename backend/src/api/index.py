@@ -47,7 +47,9 @@ def list_products(next_token: str = None):
 
 @app.post("/products", status_code=201, response_model=models.ProductResponse)
 def post_product(payload: models.CreatePayload):
-    res = dynamo.create_product(stores=payload.stores, name=payload.name)
+    res = dynamo.create_product(
+        stores=payload.stores, name=payload.name, categories=payload.categories
+    )
     return res
 
 
@@ -69,6 +71,7 @@ def update_product(product_id: str, payload: models.UpdatePayload):
             product_id=product_id,
             stores=payload.stores,
             name=payload.name,
+            categories=payload.categories,
         )
     except dynamo.ProductNotFoundError as err:
         raise HTTPException(status_code=404, detail="Product not found") from err
@@ -120,9 +123,14 @@ def bulk_upload(payload: models.ProductsBulkUploadRequest):
                     product_id=existing_products[0]["id"],
                     stores=product.stores,
                     name=product.name,
+                    categories=product.categories,
                 )
             except dynamo.ProductNotFoundError:
-                dynamo.create_product(stores=product.stores, name=product.name)
+                dynamo.create_product(
+                    stores=product.stores,
+                    name=product.name,
+                    categories=product.categories,
+                )
 
     except Exception as err:
         print(err)
