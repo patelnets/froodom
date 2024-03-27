@@ -1,4 +1,4 @@
-export { STORES } from './types';
+export { STORES, PRIMARY_CATEGORIES } from './types';
 export { getProduct } from './get-product';
 export { deleteProduct } from './delete-product';
 export { postImageUsingPreSignedUrl, getPreSignedUrl } from './upload-image';

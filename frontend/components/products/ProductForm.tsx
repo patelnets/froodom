@@ -7,9 +7,21 @@ import {
   UseControllerProps,
   useController,
 } from 'react-hook-form';
-import { Input, CheckboxGroup, Checkbox, Button } from '@nextui-org/react';
+import {
+  Input,
+  CheckboxGroup,
+  Checkbox,
+  Button,
+  Select,
+  SelectItem,
+} from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { addProduct, editProduct, STORES } from '@/queries/products';
+import {
+  addProduct,
+  editProduct,
+  STORES,
+  PRIMARY_CATEGORIES,
+} from '@/queries/products';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ImageUploads } from '@/components/products/ImageUploads';
@@ -21,6 +33,7 @@ interface Inputs {
   stores: string[];
   image_urls: Record<string, string>;
   id?: string;
+  categories: string[];
 }
 
 function ControlledInput(props: UseControllerProps<Inputs>) {
@@ -54,13 +67,19 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
     control,
     handleSubmit,
     formState: { errors },
+    register,
   } = useForm<Inputs>({
-    defaultValues: initialValues || { name: '', stores: [] },
+    defaultValues: initialValues || {
+      name: '',
+      stores: [],
+      categories: ['Sauces'],
+    },
   });
 
   if (!session?.token.id_token) {
     return null;
   }
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (initialValues?.id) {
       mutateEdit(
@@ -70,7 +89,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
             name: data.name,
             stores: data.stores,
             id: initialValues.id,
-            categories: [],
+            categories: data.categories,
           },
         },
         {
@@ -84,7 +103,11 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
       mutateAdd(
         {
           token: session?.token.id_token || '',
-          data: { name: data.name, stores: data.stores, categories: [] },
+          data: {
+            name: data.name,
+            stores: data.stores,
+            categories: data.categories,
+          },
         },
         {
           onSuccess: () => {
@@ -97,7 +120,7 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={'flex flex-col'} onSubmit={handleSubmit(onSubmit)}>
       <ControlledInput
         name='name'
         control={control}
@@ -125,9 +148,39 @@ export const ProductForm = ({ initialValues }: { initialValues?: Inputs }) => {
           </CheckboxGroup>
         )}
       />
+
+      <Controller
+        name='categories'
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { value, onChange, ref, ...field } }) => {
+          return (
+            <Select
+              label='Primary category'
+              className='max-w-xs mt-5'
+              value={value}
+              isRequired={true}
+              defaultSelectedKeys={value}
+              onChange={(event) => {
+                onChange(event.target.value.split(','));
+              }}
+              selectionMode='multiple'
+              {...field}
+            >
+              {PRIMARY_CATEGORIES.map((category) => (
+                <SelectItem key={category.value} value={category.value}>
+                  {category.displayName}
+                </SelectItem>
+              ))}
+            </Select>
+          );
+        }}
+      />
+
       <Button className={'mt-5'} type='submit'>
         Submit
       </Button>
+
       <Divider className={'my-2'} />
       {initialValues?.image_urls && (
         <ProductImages imageUrls={initialValues.image_urls} />

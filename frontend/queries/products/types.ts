@@ -27,6 +27,22 @@ export type Product = {
   categories: string[];
 };
 
+export const PRIMARY_CATEGORIES: { value: string; displayName: string }[] = [
+  { displayName: 'Chinese', value: 'chinese' },
+  { displayName: 'Dessert', value: 'dessert' },
+  { displayName: 'Drinks', value: 'drinks' },
+  { displayName: 'Fake Meat', value: 'fake Meat' },
+  { displayName: 'Frozen', value: 'frozen' },
+  { displayName: 'Italian', value: 'italian' },
+  { displayName: 'Sauces', value: 'sauces' },
+  { displayName: 'Seasoning', value: 'seasoning' },
+  { displayName: 'Sides', value: 'sides' },
+  { displayName: 'Snacks', value: 'snacks' },
+  { displayName: 'Soup', value: 'soup' },
+  { displayName: 'Sweets', value: 'sweets' },
+  { displayName: 'Tinned', value: 'tinned' },
+];
+
 export const STORES: Store[] = [
   {
     value: 'aldi',

@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
-import { STORES, type Product as IProduct } from '@/queries/products';
+import {
+  STORES,
+  type Product as IProduct,
+  PRIMARY_CATEGORIES,
+} from '@/queries/products';
 
 interface Props {
   product: IProduct;
@@ -28,6 +32,15 @@ export const Product = ({ product }: Props) => {
         {product.stores.map((store) => (
           <li key={store}>
             {STORES.find(({ value }) => value === store)?.displayName}
+          </li>
+        ))}
+      </ul>
+
+      <h2 className={'text-xl mt-2'}>Categories</h2>
+      <ul>
+        {product.categories.map((cat) => (
+          <li key={cat}>
+            {PRIMARY_CATEGORIES.find(({ value }) => value === cat)?.displayName}
           </li>
         ))}
       </ul>
