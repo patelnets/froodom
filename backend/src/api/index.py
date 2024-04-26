@@ -1,13 +1,12 @@
-import boto3
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
 from api.lib import dynamo
-from api.lib.dynamo import ProductNotFoundError
 from api.models import models
-from api.services.products import delete_all_products as delete_all_products_service
-from api.services.products import (
+from api.services.product import ProductNotFoundError, ProductService
+from api.services.product import delete_all_products as delete_all_products_service
+from api.services.product import (
     get_presigned_url_for_product,
     get_product,
     get_products,
@@ -30,8 +29,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-s3 = boto3.client("s3")
 
 
 @app.get("/")
@@ -57,7 +54,7 @@ def post_product(payload: models.CreatePayload):
 def get_product_route(product_id: str):
     try:
         return get_product(product_id)
-    except dynamo.ProductNotFoundError as err:
+    except ProductNotFoundError as err:
         raise HTTPException(status_code=404, detail="Product not found") from err
     except Exception as err:
         print(err)
@@ -73,20 +70,16 @@ def update_product(product_id: str, payload: models.UpdatePayload):
             name=payload.name,
             categories=payload.categories,
         )
-    except dynamo.ProductNotFoundError as err:
+    except ProductNotFoundError as err:
         raise HTTPException(status_code=404, detail="Product not found") from err
 
 
 @app.delete("/products/{product_id}", status_code=200)
 def delete_product(product_id: str):
     try:
-        # delete all the images from s3
-        product = get_product(product_id)
-        for image_id in product["images"]:
-            s3.delete_object(Bucket="froodom-frontend", Key=image_id)
-        dynamo.delete_product(product_id)
+        ProductService.delete_by_id(product_id=product_id)
 
-    except dynamo.ProductNotFoundError as err:
+    except ProductNotFoundError as err:
         raise HTTPException(status_code=404, detail="Product not found") from err
 
 
@@ -125,7 +118,7 @@ def bulk_upload(payload: models.ProductsBulkUploadRequest):
                     name=product.name,
                     categories=product.categories,
                 )
-            except dynamo.ProductNotFoundError:
+            except ProductNotFoundError:
                 dynamo.create_product(
                     stores=product.stores,
                     name=product.name,

@@ -4,8 +4,13 @@ from uuid import uuid4
 import boto3
 
 from api.lib import dynamo
+from api.lib.storage import delete_object
 
 s3 = boto3.client("s3")
+
+
+class ProductNotFoundError(Exception):
+    pass
 
 
 def get_all_images_for_product(product_id):
@@ -75,3 +80,12 @@ def delete_all_products():
             s3.delete_object(Bucket="froodom-frontend", Key=image_id)
         dynamo.delete_product(product["id"])
     return res
+
+
+class ProductService:
+    @staticmethod
+    def delete_by_id(product_id: str):
+        product = get_product(product_id)
+        for image_id in product["images"]:
+            delete_object(bucket="froodom-frontend", key=image_id)
+        dynamo.delete_product(product_id)

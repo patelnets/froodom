@@ -7,14 +7,12 @@ from uuid import uuid4
 import boto3
 from boto3.dynamodb.conditions import Attr, Key
 
+from api.services.product import ProductNotFoundError
+
 table = boto3.resource("dynamodb").Table(os.environ["table"])
 
 
 class Error(Exception):
-    pass
-
-
-class ProductNotFoundError(Error):
     pass
 
 
@@ -68,7 +66,7 @@ def update_product(
     stores: list[str] = None,
     name: str = None,
     categories: list[str] = None,
-) -> dict:
+):
     expr = []
     attr_values = {}
     attr_names = {}
