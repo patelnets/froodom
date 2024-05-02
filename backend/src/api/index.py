@@ -1,16 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-from api.lib import dynamo
-from api.models import models
-from api.services.product import ProductNotFoundError, ProductService
-from api.services.product import delete_all_products as delete_all_products_service
-from api.services.product import (
-    get_presigned_url_for_product,
-    get_product,
-    get_products,
-)
+from api.product.views import router
 
 app = FastAPI()
 
@@ -36,100 +28,6 @@ def get_root():
     return {"message": "Hello World"}
 
 
-@app.get("/products", response_model=models.ProductsListResponse)
-def list_products(next_token: str = None):
-    products = get_products(next_token=next_token)
-    return products
-
-
-@app.post("/products", status_code=201, response_model=models.ProductResponse)
-def post_product(payload: models.CreatePayload):
-    res = dynamo.create_product(
-        stores=payload.stores, name=payload.name, categories=payload.categories
-    )
-    return res
-
-
-@app.get("/products/{product_id}", response_model=models.ProductResponse)
-def get_product_route(product_id: str):
-    try:
-        return get_product(product_id)
-    except ProductNotFoundError as err:
-        raise HTTPException(status_code=404, detail="Product not found") from err
-    except Exception as err:
-        print(err)
-        raise HTTPException(status_code=500, detail="Something went wrong") from err
-
-
-@app.patch("/products/{product_id}")
-def update_product(product_id: str, payload: models.UpdatePayload):
-    try:
-        dynamo.update_product(
-            product_id=product_id,
-            stores=payload.stores,
-            name=payload.name,
-            categories=payload.categories,
-        )
-    except ProductNotFoundError as err:
-        raise HTTPException(status_code=404, detail="Product not found") from err
-
-
-@app.delete("/products/{product_id}", status_code=200)
-def delete_product(product_id: str):
-    try:
-        ProductService.delete_by_id(product_id=product_id)
-
-    except ProductNotFoundError as err:
-        raise HTTPException(status_code=404, detail="Product not found") from err
-
-
-@app.get("/products/{product_id}/image-upload-pre-signed-url")
-def upload_pre_signed(product_id: str):
-    try:
-        url = get_presigned_url_for_product(product_id)
-
-    except Exception as err:
-        raise HTTPException(status_code=500, detail="Something went wrong") from err
-
-    return {"url": url}
-
-
-@app.delete("/products/all/force", status_code=200)
-def delete_all_products():
-    delete_all_products_service()
-
-
-@app.post("/products/bulk", status_code=201)
-def bulk_upload(payload: models.ProductsBulkUploadRequest):
-    try:
-        for product in payload.products:
-            try:
-                existing_products = dynamo.get_products_by_name(product.name)
-                if len(existing_products) > 1:
-                    raise HTTPException(
-                        status_code=500,
-                        detail="There are more than one products with the same name",
-                    )
-                if len(existing_products) == 0:
-                    raise ProductNotFoundError
-                dynamo.update_product(
-                    product_id=existing_products[0]["id"],
-                    stores=product.stores,
-                    name=product.name,
-                    categories=product.categories,
-                )
-            except ProductNotFoundError:
-                dynamo.create_product(
-                    stores=product.stores,
-                    name=product.name,
-                    categories=product.categories,
-                )
-
-    except Exception as err:
-        print(err)
-        raise HTTPException(status_code=500, detail="Something went wrong") from err
-
-    return {"message": f"Successfully added {len(payload.products)} products"}
-
+app.include_router(router)
 
 handler = Mangum(app)

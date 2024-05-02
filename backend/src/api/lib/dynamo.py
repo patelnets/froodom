@@ -7,7 +7,7 @@ from uuid import uuid4
 import boto3
 from boto3.dynamodb.conditions import Attr, Key
 
-from api.services.product import ProductNotFoundError
+from api.product.exceptions import ProductNotFoundError
 
 table = boto3.resource("dynamodb").Table(os.environ["table"])
 
